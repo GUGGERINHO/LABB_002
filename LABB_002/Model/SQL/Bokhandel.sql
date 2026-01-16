@@ -1,0 +1,67 @@
+USE [Bokhandel]
+GO
+/****** Object:  Table [dbo].[Books]    Script Date: 2026-01-16 20:45:06 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Books](
+	[ISBN13] [char](13) NOT NULL,
+	[Title] [nvarchar](200) NOT NULL,
+	[Language] [nvarchar](50) NOT NULL,
+	[Price] [decimal](10, 2) NOT NULL,
+	[PublishingDate] [date] NOT NULL,
+	[AuthorId] [int] NOT NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[ISBN13] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Inventory]    Script Date: 2026-01-16 20:45:06 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Inventory](
+	[StoreId] [int] NOT NULL,
+	[ISBN13] [char](13) NOT NULL,
+	[Quantity] [int] NOT NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[StoreId] ASC,
+	[ISBN13] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Stores]    Script Date: 2026-01-16 20:45:06 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Stores](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Name] [nvarchar](100) NOT NULL,
+	[Address] [nvarchar](200) NOT NULL,
+	[City] [nvarchar](100) NOT NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+ALTER TABLE [dbo].[Books]  WITH CHECK ADD FOREIGN KEY([AuthorId])
+REFERENCES [dbo].[Author] ([Id])
+GO
+ALTER TABLE [dbo].[Inventory]  WITH CHECK ADD FOREIGN KEY([ISBN13])
+REFERENCES [dbo].[Books] ([ISBN13])
+GO
+ALTER TABLE [dbo].[Inventory]  WITH CHECK ADD FOREIGN KEY([StoreId])
+REFERENCES [dbo].[Stores] ([Id])
+GO
+ALTER TABLE [dbo].[Books]  WITH CHECK ADD CHECK  ((NOT [ISBN13] like '%[^0-9]%'))
+GO
+ALTER TABLE [dbo].[Books]  WITH CHECK ADD CHECK  (([Price]>=(0)))
+GO
+ALTER TABLE [dbo].[Inventory]  WITH CHECK ADD CHECK  (([Quantity]>=(0)))
+GO
