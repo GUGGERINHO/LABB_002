@@ -11,7 +11,7 @@ while (true)
 {
     Console.WriteLine("1. List all stores and their inventory");
     Console.WriteLine("2. Add book to a store");
-    Console.WriteLine("3. Remove book from a store");
+    Console.WriteLine("3. Delete book from a store");
     Console.WriteLine("4. Update inventory for a store");
     Console.WriteLine("0. Exit");
     var input = Console.ReadLine();
@@ -27,8 +27,8 @@ while (true)
                 Console.WriteLine("Invalid store input");
                 break;
             }
-            string isbn13 = BokhandelOperations.ChooseBook(db);
-            if(isbn13 == null)
+            string isbn = BokhandelOperations.ChooseBook(db);
+            if(isbn == null)
             {
                 Console.WriteLine("Invalid book input");
                 break;
@@ -39,7 +39,21 @@ while (true)
                 Console.WriteLine("Invalid quantity input");
                 break;
             }
-            BokhandelOperations.AddBookToStore(db, storeId, isbn13, quantity);
+            BokhandelOperations.AddBookToStore(db, storeId, isbn, quantity);
+            break;
+        case "3":
+            int storeId2 = BokhandelOperations.ChooseStore(db);
+            if (storeId2 == 0)
+            {
+                Console.WriteLine("Invalid store input");
+                break;
+            }
+            string isbn2 = BokhandelOperations.ChooseBook(db);
+            if(isbn2 == null)
+            {
+                Console.WriteLine("Invalid book input");
+            }
+            BokhandelOperations.DeleteBookFromStore(db, storeId2, isbn2);
             break;
     }
 }
