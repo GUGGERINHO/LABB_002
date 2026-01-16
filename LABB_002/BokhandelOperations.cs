@@ -90,11 +90,11 @@ namespace LABB_002
         {
             var books = db.Books.ToList();
 
+            Console.WriteLine("\nWhich book: ");
             for (int i = 0; i < books.Count; i++)
             {
                 Console.WriteLine($"{i + 1}. {books[i].Title}");
             }
-            Console.WriteLine("Which book: ");
             if(!int.TryParse(Console.ReadLine(), out int choice) || choice < 1 || choice > books.Count)
             {
                 return null;

@@ -9,12 +9,13 @@ using var db = new BokhandelContext();
 
 while (true)
 {
-    Console.WriteLine("1. List all stores and their inventory");
+    Console.WriteLine("\n1. List all stores and their inventory");
     Console.WriteLine("2. Add book to a store");
     Console.WriteLine("3. Delete book from a store");
     Console.WriteLine("4. Update inventory for a store");
     Console.WriteLine("0. Exit");
     var input = Console.ReadLine();
+    Console.Clear();
     switch (input)
     {
         case "1":
@@ -24,19 +25,19 @@ while (true)
             int storeId = BokhandelOperations.ChooseStore(db);
             if(storeId == 0)
             {
-                Console.WriteLine("Invalid store input");
+                Console.WriteLine("\nInvalid store input");
                 break;
             }
             string isbn = BokhandelOperations.ChooseBook(db);
             if(isbn == null)
             {
-                Console.WriteLine("Invalid book input");
+                Console.WriteLine("\nInvalid book input");
                 break;
             }
-            Console.WriteLine("How many copies would you like to add?");
+            Console.WriteLine("\nHow many copies would you like to add?");
             if(!int.TryParse(Console.ReadLine(), out int quantity))
             {
-                Console.WriteLine("Invalid quantity input");
+                Console.WriteLine("\nInvalid quantity input");
                 break;
             }
             BokhandelOperations.AddBookToStore(db, storeId, isbn, quantity);
@@ -45,13 +46,13 @@ while (true)
             int storeId2 = BokhandelOperations.ChooseStore(db);
             if (storeId2 == 0)
             {
-                Console.WriteLine("Invalid store input");
+                Console.WriteLine("\nInvalid store input");
                 break;
             }
             string isbn2 = BokhandelOperations.ChooseBook(db);
             if(isbn2 == null)
             {
-                Console.WriteLine("Invalid book input");
+                Console.WriteLine("\nInvalid book input");
             }
             BokhandelOperations.DeleteBookFromStore(db, storeId2, isbn2);
             break;
@@ -59,27 +60,33 @@ while (true)
             int storeId3 = BokhandelOperations.ChooseStore(db);
             if (storeId3 == 0)
             {
-                Console.WriteLine("Invalid store input");
+                Console.WriteLine("\nInvalid store input");
                 break;
             }
             string isbn3 = BokhandelOperations.ChooseBook(db);
             if (isbn3 == null)
             {
-                Console.WriteLine("Invalid book input");
+                Console.WriteLine("\nInvalid book input");
                 break;
             }
-            Console.WriteLine("What should the new quantity be?");
+            Console.WriteLine("\nWhat should the new quantity be?");
             if (!int.TryParse(Console.ReadLine(), out int quantity2))
             {
-                Console.WriteLine("Invalid quantity input");
+                Console.WriteLine("\nInvalid quantity input");
                 break;
             }
             else if(quantity2 < 0)
             {
-                Console.WriteLine("Quantity cannot be negative");
+                Console.WriteLine("\nQuantity cannot be negative");
                 break;
             }
             BokhandelOperations.UpdateBookQuantity(db, storeId3, isbn3, quantity2);
+            break;
+        case "0": 
+            Console.WriteLine("\nExiting app..."); 
+            return; 
+        default: 
+            Console.WriteLine("\nInvalid menu option");
             break;
     }
 }
