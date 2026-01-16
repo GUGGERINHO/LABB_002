@@ -43,11 +43,11 @@ namespace LABB_002
             {
                 item.Quantity = newQuantity;
                 db.SaveChanges();
-                Console.WriteLine("Quantity updated successfully");
+                Console.WriteLine("\nQuantity updated successfully");
             }
             else
             {
-                Console.WriteLine("Inventory item not found");
+                Console.WriteLine("\nInventory item not found");
             }
         }
         public static void AddBookToStore(BokhandelContext db, int storeId, string isbn13, int quantity)
@@ -56,8 +56,8 @@ namespace LABB_002
                 .FirstOrDefault(i => i.StoreId == storeId && i.Isbn13 == isbn13);
             if(existing != null)
             {
-                existing.Quantity += quantity;
-                Console.WriteLine("Quantity updated successfully");
+                Console.WriteLine("\nBook already exists in this store. Returning to menu...");
+                return;
             }
             else
             {
@@ -67,7 +67,7 @@ namespace LABB_002
                     Isbn13 = isbn13,
                     Quantity = quantity
                 });
-                Console.WriteLine("Book added successfully");
+                Console.WriteLine("\nBook added successfully");
             }
             db.SaveChanges();
         }
@@ -79,11 +79,11 @@ namespace LABB_002
             {
                 db.Inventories.Remove(item);
                 db.SaveChanges();
-                Console.WriteLine("Book removed successfully");
+                Console.WriteLine("\nBook removed successfully");
             }
             else
             {
-                Console.WriteLine("Inventory item not found");
+                Console.WriteLine("\nInventory item not found");
             }
         }
         public static string ChooseBook(BokhandelContext db)
@@ -105,7 +105,7 @@ namespace LABB_002
         {
             var stores = db.Stores.ToList();
             int i = 1;
-            Console.WriteLine("Which store?");
+            Console.WriteLine("\nWhich store?");
             foreach (var store in stores)
             {
                 Console.WriteLine($"{i}. {store.Name}");

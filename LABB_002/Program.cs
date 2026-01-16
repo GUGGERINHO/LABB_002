@@ -22,62 +22,80 @@ while (true)
             BokhandelOperations.ListStoresAndInventory(db);
             break;
         case "2":
-            int storeId = BokhandelOperations.ChooseStore(db);
-            if(storeId == 0)
+            int storeId;
+            while (true)
             {
-                Console.WriteLine("\nInvalid store input");
-                break;
+                storeId = BokhandelOperations.ChooseStore(db);
+                if (storeId != 0) break;
+                Console.WriteLine("\nInvalid store input. try again");
             }
-            string isbn = BokhandelOperations.ChooseBook(db);
-            if(isbn == null)
+            string isbn;
+            while (true)
             {
-                Console.WriteLine("\nInvalid book input");
-                break;
+                isbn = BokhandelOperations.ChooseBook(db);
+                if (isbn != null) break;
+                Console.WriteLine("\nInvalid book input. Try again");
             }
-            Console.WriteLine("\nHow many copies would you like to add?");
-            if(!int.TryParse(Console.ReadLine(), out int quantity))
+            int quantity;
+            while (true)
             {
-                Console.WriteLine("\nInvalid quantity input");
+                Console.WriteLine("\nHow many copies would you like to add?");
+                if (!int.TryParse(Console.ReadLine(), out quantity) || quantity < 0)
+                {
+                    Console.WriteLine("\nInvalid quantity input. Try again");
+                    continue;
+                }
                 break;
             }
             BokhandelOperations.AddBookToStore(db, storeId, isbn, quantity);
             break;
         case "3":
-            int storeId2 = BokhandelOperations.ChooseStore(db);
-            if (storeId2 == 0)
+            int storeId2;
+            while (true)
             {
-                Console.WriteLine("\nInvalid store input");
-                break;
+                storeId2 = BokhandelOperations.ChooseStore(db);
+                if (storeId2 != 0) break;
+                Console.WriteLine("\nInvalid store input. Try again");
             }
-            string isbn2 = BokhandelOperations.ChooseBook(db);
-            if(isbn2 == null)
+            string isbn2;
+            while(true)
             {
-                Console.WriteLine("\nInvalid book input");
+                isbn2 = BokhandelOperations.ChooseBook(db);
+                if (isbn2 != null) break;
+                Console.WriteLine("\nInvalid book input. Try again");
             }
             BokhandelOperations.DeleteBookFromStore(db, storeId2, isbn2);
             break;
         case "4":
-            int storeId3 = BokhandelOperations.ChooseStore(db);
-            if (storeId3 == 0)
+            int storeId3;
+            while (true)
             {
-                Console.WriteLine("\nInvalid store input");
-                break;
+                storeId3 = BokhandelOperations.ChooseStore(db);
+                if (storeId3 != 0) break;
+                Console.WriteLine("\nInvalid store input. Try again");
             }
-            string isbn3 = BokhandelOperations.ChooseBook(db);
-            if (isbn3 == null)
+            string isbn3;
+            while (true)
             {
-                Console.WriteLine("\nInvalid book input");
-                break;
+                isbn3 = BokhandelOperations.ChooseBook(db);
+                if (isbn3 != null) break;
+                Console.WriteLine("\nInvalid book input. Try again");
             }
-            Console.WriteLine("\nWhat should the new quantity be?");
-            if (!int.TryParse(Console.ReadLine(), out int quantity2))
+            int quantity2;
+            while (true)
             {
-                Console.WriteLine("\nInvalid quantity input");
-                break;
-            }
-            else if(quantity2 < 0)
-            {
-                Console.WriteLine("\nQuantity cannot be negative");
+                Console.WriteLine("\nWhat should the new quantity be?");
+                string quantInput = Console.ReadLine();
+                if (!int.TryParse(quantInput, out quantity2))
+                {
+                    Console.WriteLine("\nInvalid quantity input. Try again");
+                    continue;
+                }
+                if(quantity2 < 0)
+                {
+                    Console.WriteLine("\nQuantity cannot be negative. Try again");
+                    continue;
+                }
                 break;
             }
             BokhandelOperations.UpdateBookQuantity(db, storeId3, isbn3, quantity2);
