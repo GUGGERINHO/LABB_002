@@ -55,5 +55,31 @@ while (true)
             }
             BokhandelOperations.DeleteBookFromStore(db, storeId2, isbn2);
             break;
+        case "4":
+            int storeId3 = BokhandelOperations.ChooseStore(db);
+            if (storeId3 == 0)
+            {
+                Console.WriteLine("Invalid store input");
+                break;
+            }
+            string isbn3 = BokhandelOperations.ChooseBook(db);
+            if (isbn3 == null)
+            {
+                Console.WriteLine("Invalid book input");
+                break;
+            }
+            Console.WriteLine("What should the new quantity be?");
+            if (!int.TryParse(Console.ReadLine(), out int quantity2))
+            {
+                Console.WriteLine("Invalid quantity input");
+                break;
+            }
+            else if(quantity2 < 0)
+            {
+                Console.WriteLine("Quantity cannot be negative");
+                break;
+            }
+            BokhandelOperations.UpdateBookQuantity(db, storeId3, isbn3, quantity2);
+            break;
     }
 }
