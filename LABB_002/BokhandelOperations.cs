@@ -12,7 +12,7 @@ namespace LABB_002
     {
         public static void ListStoresAndInventory(BokhandelContext db)
         {
-            var stores = db.Stores.ToList();
+            var stores = db.Stores.OrderBy(s => s.Name).ToList();
 
             foreach (var store in stores)
             {
@@ -28,7 +28,7 @@ namespace LABB_002
                     )
                     .ToList();
 
-                foreach (var item in storeInventory)
+                foreach (var item in storeInventory.OrderBy(i => i.Book.Title))
                 {
                     Console.WriteLine($"{item.Book.Title} | Quantity: {item.Quantity}");
                 }
