@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static System.Reflection.Metadata.BlobBuilder;
 
 namespace LABB_002
 {
@@ -83,6 +84,40 @@ namespace LABB_002
             else
             {
                 Console.WriteLine("Inventory item not found");
+            }
+        }
+        public static string ChooseBook(BokhandelContext db)
+        {
+            var books = db.Books.ToList();
+
+            for (int i = 0; i < books.Count; i++)
+            {
+                Console.WriteLine($"{i + 1}. {books[i].Title}");
+            }
+            Console.WriteLine("Which book: ");
+            if(!int.TryParse(Console.ReadLine(), out int choice) || choice < 1 || choice > books.Count)
+            {
+                return null;
+            }
+            return books[choice - 1].Isbn13;
+        }
+        public static int ChooseStore(BokhandelContext db)
+        {
+            var stores = db.Stores.ToList();
+            int i = 1;
+            Console.WriteLine("Which store?");
+            foreach (var store in stores)
+            {
+                Console.WriteLine($"{i}. {store.Name}");
+                i++;
+            }
+            if (!int.TryParse(Console.ReadLine(), out int choice) || choice < 1 || choice > stores.Count)
+            {
+                return 0;
+            }
+            else
+            {
+                return stores[choice - 1].Id;
             }
         }
     }
