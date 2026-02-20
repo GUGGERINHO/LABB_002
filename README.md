@@ -2,7 +2,6 @@
 This is a small C# console app that lets you perform CRUD operations on a bookstore database using Entity Framework Core
 
 instructions
-1. Create a new database in SQL server.
-2. Run the script located in /SQL/Bokhandel.sql to create tables and insert test data.
-3. Open BokhandelContext.cs and update the connection string on row 36 like this (Database=YourDatabaseName)
-4. Run the application.
+1. Open SQL server management studio and press "New Query".
+2. Paste and execute the script located in LABB_002/Model/SQL/Bokhandel.sql to create tables and insert test data.
+3. Run the application.
